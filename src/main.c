@@ -1,13 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <getopt.h>
 #include "../includes/commands.h"
 
 int main(int argc, char *argv[]) {
     int opt;
     char *path_conf_zen;
 
-    while ((opt = getopt(argc, argv, "hc")) != -1) {
+    static struct option long_options[] = {
+        { "help",       no_argument, 0, 'h' },
+        { "configure",  no_argument, 0, 'c' }
+    };
+
+    while (1) {
+        int option_index = 0;
+
+        opt = getopt_long(argc, argv, "hc", long_options, &option_index);
+
+        if (opt == -1) break;
+
         switch (opt) {
             case 'h':
                 help();

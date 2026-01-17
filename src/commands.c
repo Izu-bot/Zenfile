@@ -5,11 +5,12 @@
 #include "../includes/commands.h"
 
 void help() {
-    printf("Usage: zenfile [options]\n");
-    printf("Organize your directory by moving files to protected directories.\n");
-    printf("COMMANDS\n");
-    printf("OPTIONS\n");
-    printf("EXAMPLES\n");
+    printf("Usage: zenfile [options]\n\n\n");
+    printf("Organize your directory by moving files to protected directories.\n\n\n");
+    printf("COMMANDS\n\n");
+    printf("-c, --configure\t\tcreate the configuration file.");
+    printf("OPTIONS\n\n");
+    printf("EXAMPLES\n\n");
     printf("Use: 'zenfile <command> --help' for more information about the command.\n");
 }
 
