@@ -8,7 +8,8 @@ void help() {
     printf("Usage: zenfile [options]\n\n\n");
     printf("Organize your directory by moving files to protected directories.\n\n\n");
     printf("COMMANDS\n\n");
-    printf("-c, --configure\t\tcreate the configuration file.");
+    printf("-c, --configure         create the configuration file.");
+    printf("-h, --help              help for using zenfile.");
     printf("OPTIONS\n\n");
     printf("EXAMPLES\n\n");
     printf("Use: 'zenfile <command> --help' for more information about the command.\n");
@@ -16,8 +17,7 @@ void help() {
 
 /// @brief Gera o arquivo de configuração da ferramenta.
 /// @return Retorna o caminho completo aonde foi gerado.
-char* gen_conf_file() {
-    char *home_dir = getenv("HOME");
+char* gen_conf_file(char *home_dir) {
     if (home_dir == NULL) return NULL;
 
     static char path[512];

@@ -4,7 +4,16 @@
 #include <getopt.h>
 #include "../includes/commands.h"
 
+char *home_dir = NULL;
+
 int main(int argc, char *argv[]) {
+    home_dir = getenv("HOME");
+
+    if (home_dir == NULL) {
+        fprintf(stderr, "The variable HOME was not found in your system.\n");
+        return 1;
+    }
+
     int opt;
     char *path_conf_zen;
 
@@ -25,7 +34,7 @@ int main(int argc, char *argv[]) {
                 help();
                 break;
             case 'c':
-                path_conf_zen = gen_conf_file();
+                path_conf_zen = gen_conf_file(home_dir);
                 printf("File created in %s\n", path_conf_zen);
                 break;
             case '?':
