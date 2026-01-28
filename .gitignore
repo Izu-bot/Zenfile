@@ -1,0 +1,17 @@
+# Object files
+*/*.o
+
+# Executables
+*.exe
+# or specific executable names, e.g.,
+myprogram
+
+# Debugging related files
+*.dwo
+
+# Temporary or editor-specific files
+*~
+
+# Zenfile build files
+zenfile
+zenfile.ex.conf

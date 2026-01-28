@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
         int option_index = 0;
 
         opt = getopt_long(argc, argv, "hgc", long_options, &option_index);
-
+        
         if (opt == -1) break;
 
         switch (opt) {
