@@ -8,6 +8,7 @@ char *home_dir = NULL;
 
 int main(int argc, char *argv[]) {
     home_dir = getenv("HOME");
+    ZenConfig config;
 
     if (home_dir == NULL) {
         fprintf(stderr, "The variable HOME was not found in your system.\n");
@@ -18,14 +19,15 @@ int main(int argc, char *argv[]) {
     char *path_conf_zen;
 
     static struct option long_options[] = {
-        { "help",       no_argument, 0, 'h' },
-        { "configure",  no_argument, 0, 'c' }
+        { "help",           no_argument,    0,  'h' },
+        { "generate",       no_argument,    0,  'g' },
+        { "configure",      no_argument,    0,  'c'}
     };
 
     while (1) {
         int option_index = 0;
 
-        opt = getopt_long(argc, argv, "hc", long_options, &option_index);
+        opt = getopt_long(argc, argv, "hgc", long_options, &option_index);
 
         if (opt == -1) break;
 
@@ -33,9 +35,12 @@ int main(int argc, char *argv[]) {
             case 'h':
                 help();
                 break;
-            case 'c':
+            case 'g':
                 path_conf_zen = gen_conf_file(home_dir);
                 printf("File created in %s\n", path_conf_zen);
+                break;
+            case 'c':
+                configure_zenfile(home_dir, &config);
                 break;
             case '?':
                 fprintf(stderr, "Usage: %s <command> --help\n", argv[0]);
