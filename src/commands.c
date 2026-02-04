@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <strings.h>
 #include <string.h>
+#include <libgen.h>
+#include <dirent.h>
 #include "../includes/commands.h"
 
 /// @brief Método de ajuda/manual ao usuário de como usar o utilitário
@@ -103,4 +106,75 @@ void configure_zenfile(char *home_dir, ZenConfig *config) {
     load_config(conf_path, config);
 
     printf("Loaded configuration!\n");
+}
+
+int move_file_to_dir(char *source_file, char *dest_folder) {
+    if (source_file == NULL || dest_folder == NULL) {
+        printf("Error: Invalid destination file or folder\n");
+        return -1;
+    }
+
+    char *filename = basename(source_file);
+
+    char final_path[1024];
+    
+    snprintf(final_path, sizeof(final_path), "%s/%s", dest_folder, filename);
+
+    if (rename(source_file, final_path) == 0) {
+        printf("Success! File moved to: %s\n", final_path);
+        return 0;
+    } else {
+        perror("Error moving file");
+        return -1;
+    }
+}
+
+int has_extension(char *filename, char *ext) {
+    char *dot = strrchr(filename, '.');
+    if (!dot || !dot[1]) return 0;
+
+    return (strcasecmp(dot, ext) == 0);
+}
+
+void organize_directory(char *target_dir, ZenConfig *config) {
+    DIR *d;
+    struct dirent *dir;
+
+    d = opendir(target_dir);
+    if (!d) {
+        perror("Error opening directory for organization");
+        return;
+    }
+
+    printf("--- Organizing folder: %s ---\n", target_dir);
+
+    while ((dir = readdir(d)) != NULL) {
+        if (strcmp(dir->d_name, ".") == 0 || strcmp(dir->d_name, "..") == 0) {
+            continue;
+        }
+
+        char *filename = dir->d_name;
+        char *dest_path = NULL;
+
+        if (has_extension(filename, ".png") ||
+            has_extension(filename, ".jpg") ||
+            has_extension(filename, ".jpeg")) {
+                dest_path = config->images_path;
+            }
+        else if (has_extension(filename, ".pdf")) {
+            dest_path = config->docs_path;
+        }
+        else {
+            printf("Ignored (unknown type): %s\n", filename);
+            continue;
+        }
+
+        char full_source_path[1024];
+        snprintf(full_source_path, sizeof(full_source_path), "%s/%s", target_dir, filename);
+
+        move_file_to_dir(full_source_path, dest_path);
+    }
+
+    closedir(d);
+    printf("--- Organization completed ---\n");
 }
