@@ -10,15 +10,14 @@
 
 /// @brief Método de ajuda/manual ao usuário de como usar o utilitário
 void help() {
-    printf("Usage: zenfile [options]\n\n\n");
+    printf("Usage: zenfile [OPTION]\n\n\n");
     printf("Organize your directory by moving files to protected directories.\n\n\n");
-    printf("COMMANDS\n\n");
-    printf("-g, --generate          generate the configuration file.");
-    printf("-c, --configure         create the configuration file.");
-    printf("-h, --help              help for using zenfile.");
     printf("OPTIONS\n\n");
-    printf("EXAMPLES\n\n");
-    printf("Use: 'zenfile <command> --help' for more information about the command.\n");
+    printf("-g, --generate          \n\tgenerate the configuration file.\n");
+    printf("-c, --configure         \n\tcreate the configuration file.\n");
+    printf("-o, --organize          \n\tOrganize your files based on the configuration file.\n");
+    printf("-h, --help              \n\thelp for using zenfile.\n");
+    // printf("Use: 'zenfile <option> --help' for more information about the option.\n");
 }
 
 /// @brief Gera o arquivo de configuração da ferramenta

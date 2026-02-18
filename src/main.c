@@ -23,10 +23,10 @@ int main(int argc, char *argv[]) {
 
     int opt;
     static struct option long_options[] = {
-        { "help",           no_argument,        0,  'h' },
-        { "generate",       no_argument,        0,  'g' },
-        { "configure",      no_argument,        0,  'c' },
-        { "move",           required_argument,  0,  'm' },
+        { "help",           no_argument,        0,      'h' },
+        { "generate",       no_argument,        0,      'g' },
+        { "configure",      no_argument,        0,      'c' },
+        { "organize",       required_argument,  0,      'o' },
         { 0, 0, 0, 0},
     };
 
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
             case 'c':
                 configure_zenfile(home_dir, &config);
                 break;
-            case 'm':
+            case 'o':
                 organize_directory(optarg, &config);
                 break;
             case '?':
